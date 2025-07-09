@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace EShift_App.View
 {
-    public partial class Customer : Form
+    public partial class JobForm : Form
     {
-        public Customer()
+        public JobForm()
         {
             InitializeComponent();
         }

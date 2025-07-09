@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EShift_App.Data.Repositories
 {
-    internal class CustomerRepository: Repository<Customer>, ICustomerRepository
+    public class CustomerRepository: Repository<Customer>, ICustomerRepository
     {
         public CustomerRepository(AppDbContext context) : base(context)
         {

@@ -15,5 +15,7 @@ namespace EShift_App.Model
         public string Type { get; set; } // e.g., "20ft", "40ft", "Reefer"
         public int Capacity { get; set; }
         public string Status { get; set; } // e.g., "Available", "In Use", "Maintenance"
+        
+        public ICollection<Load> Loads { get; set; } = new List<Load>();
     }
 }

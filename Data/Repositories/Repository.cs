@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EShift_App.Data.Repositories
 {
-    internal class Repository<T> : IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : class
     {
         protected readonly AppDbContext _context;
 

@@ -15,4 +15,25 @@
     <PackageReference Include="MySql.EntityFrameworkCore" Version="9.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="View\AssistantForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\DriverForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\CustomerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\DashboardForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="View\DriverForm.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

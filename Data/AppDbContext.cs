@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EShift_App.Data
 {
-    internal class AppDbContext:DbContext
+    public class AppDbContext:DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options): base(options)
         {
@@ -39,34 +39,10 @@ namespace EShift_App.Data
                 .HasOne(l => l.TransportUnit)
                 .WithMany()
                 .HasForeignKey(l => l.TransportUnitID);
-            modelBuilder.Entity<Driver>()
-                .HasOne(d => d.Lorry)
-                .WithMany(l => l.Drivers)
-                .HasForeignKey(d => d.LorryID);
-            modelBuilder.Entity<Assistant>()
-                .HasOne(a => a.Lorry)
-                .WithMany(l => l.Assistants)
-                .HasForeignKey(a => a.LorryID);
-            modelBuilder.Entity<Container>()
-                .HasOne(c => c.TransportUnit)
-                .WithMany(t => t.Containers)
-                .HasForeignKey(c => c.TransportUnitID);
-            modelBuilder.Entity<TransportUnit>()
-                .HasMany(t => t.Containers)
-                .WithOne(c => c.TransportUnit)
-                .HasForeignKey(c => c.TransportUnitID);
-            modelBuilder.Entity<TransportUnit>()
-                .HasMany(t => t.Loads)
-                .WithOne(l => l.TransportUnit)
-                .HasForeignKey(l => l.TransportUnitID);
-            modelBuilder.Entity<TransportUnit>()
-                .HasMany(t => t.Jobs)
-                .WithOne(j => j.TransportUnit)
-                .HasForeignKey(j => j.TransportUnitID);
-            modelBuilder.Entity<TransportUnit>()
-                .HasMany(t => t.Drivers)
-                .WithOne(d => d.TransportUnit)
-                .HasForeignKey(d => d.TransportUnitID);
+            modelBuilder.Entity<Load>()
+                .HasOne(l => l.Container)
+                .WithMany(c => c.Loads)
+                .HasForeignKey(l => l.ContainerID);
         }
     }
 }

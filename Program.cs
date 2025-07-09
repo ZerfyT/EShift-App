@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using EShift_App.Data;
 using EShift_App.Data.Repositories;
+using EShift_App.View;
 
 namespace EShift_App
 {
@@ -29,19 +30,19 @@ namespace EShift_App
             {
                 var connectionString = context.Configuration.GetConnectionString("DefaultConnection");
                 services.AddDbContext<AppDbContext>(options =>
-                    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
-
+                    options.UseMySQL(connectionString));
+                
                 services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
                 services.AddScoped<ICustomerRepository, CustomerRepository>();
                 // ... register other repositories here
-
+                
                 // 3. Register Forms
-                services.AddTransient<CustomersForm>();
+                services.AddTransient<MDIParent1>();
             })
             .Build();
 
             // Get the main form from the service provider and run it
-            var mainForm = host.Services.GetRequiredService<CustomersForm>();
+            var mainForm = host.Services.GetRequiredService<MDIParent1>();
 
 
             Application.Run(mainForm);

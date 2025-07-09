@@ -17,5 +17,7 @@ namespace EShift_App.Model
         public string PhoneNumber { get; set; }
         public string? Email { get; set; }
         public DateTime HireDate { get; set; }
+
+        public ICollection<TransportUnit> TransportUnits { get; set; } = new List<TransportUnit>();
     }
 }

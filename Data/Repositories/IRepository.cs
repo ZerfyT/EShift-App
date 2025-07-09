@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EShift_App.Data.Repositories
 {
-    internal interface IRepository<T> where T : class
+    public interface IRepository<T> where T : class
     {
         Task<T?> GetByIdAsync(int id);
         Task<IEnumerable<T>> GetAllAsync();

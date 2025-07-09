@@ -7,7 +7,7 @@ using EShift_App.Model;
 
 namespace EShift_App.Data.Repositories
 {
-    internal interface ICustomerRepository:IRepository<Customer>
+    public interface ICustomerRepository : IRepository<Customer>
     {
         Task<Customer?> GetCustomerByPhoneNumberAsync(string phoneNumber);
     }

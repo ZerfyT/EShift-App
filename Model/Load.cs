@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +10,7 @@ namespace EShift_App.Model
 {
     internal class Load
     {
+        [Key]
         public int LoadID { get; set; }
         public string LoadNumber { get; set; } // Unique identifier for the load
         public string Description { get; set; } // Description of the load
@@ -19,6 +22,15 @@ namespace EShift_App.Model
         public int ContainerID { get; set; } // Foreign key to Container
         public int JobID { get; set; } // Foreign key to Job
         public int TransportUnitID { get; set; } // Foreign key to Lorry or Trailer
+        
+        [ForeignKey("ContainerID")]
+        public Container Container { get; set; }
+        
+        [ForeignKey("JobID")]
+        public Job Job { get; set; }
+        
+        [ForeignKey("TransportUnitID")]
+        public TransportUnit TransportUnit { get; set; }
 
     }
 }
