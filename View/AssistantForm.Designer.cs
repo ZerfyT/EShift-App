@@ -19,7 +19,6 @@ partial class AssistantForm
         {
             components.Dispose();
         }
-
         base.Dispose(disposing);
     }
 
@@ -31,171 +30,240 @@ partial class AssistantForm
     /// </summary>
     private void InitializeComponent()
     {
-        tbCustomers = new DataGridView();
-        groupBox1 = new GroupBox();
-        button3 = new Button();
-        button2 = new Button();
-        button1 = new Button();
-        textBox5 = new TextBox();
-        txPhoneNumber = new Label();
-        textBox4 = new TextBox();
-        txEmail = new Label();
-        txLastName = new TextBox();
-        label2 = new Label();
-        txFirstName = new TextBox();
-        label1 = new Label();
-        ((ISupportInitialize)tbCustomers).BeginInit();
-        groupBox1.SuspendLayout();
+        dataGridViewAssistants = new DataGridView();
+        groupBoxDetails = new GroupBox();
+        panelDetails = new Panel();
+        dtpHireDate = new DateTimePicker();
+        lblHireDate = new Label();
+        txtPhoneNumber = new TextBox();
+        lblPhoneNumber = new Label();
+        txtLastName = new TextBox();
+        lblLastName = new Label();
+        txtFirstName = new TextBox();
+        lblFirstName = new Label();
+        btnDelete = new Button();
+        btnCancel = new Button();
+        btnSave = new Button();
+        btnAddNew = new Button();
+        txtSearch = new TextBox();
+        btnSearch = new Button();
+        lblSearch = new Label();
+        ((ISupportInitialize)dataGridViewAssistants).BeginInit();
+        groupBoxDetails.SuspendLayout();
+        panelDetails.SuspendLayout();
         SuspendLayout();
         // 
-        // tbCustomers
+        // dataGridViewAssistants
         // 
-        tbCustomers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-        tbCustomers.Location = new Point(12, 131);
-        tbCustomers.Name = "tbCustomers";
-        tbCustomers.RowHeadersWidth = 51;
-        tbCustomers.Size = new Size(492, 510);
-        tbCustomers.TabIndex = 0;
+        dataGridViewAssistants.AllowUserToAddRows = false;
+        dataGridViewAssistants.AllowUserToDeleteRows = false;
+        dataGridViewAssistants.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+        dataGridViewAssistants.Location = new Point(12, 59);
+        dataGridViewAssistants.Name = "dataGridViewAssistants";
+        dataGridViewAssistants.ReadOnly = true;
+        dataGridViewAssistants.RowHeadersWidth = 51;
+        dataGridViewAssistants.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+        dataGridViewAssistants.Size = new Size(575, 582);
+        dataGridViewAssistants.TabIndex = 0;
         // 
-        // groupBox1
+        // groupBoxDetails
         // 
-        groupBox1.Controls.Add(button3);
-        groupBox1.Controls.Add(button2);
-        groupBox1.Controls.Add(button1);
-        groupBox1.Controls.Add(textBox5);
-        groupBox1.Controls.Add(txPhoneNumber);
-        groupBox1.Controls.Add(textBox4);
-        groupBox1.Controls.Add(txEmail);
-        groupBox1.Controls.Add(txLastName);
-        groupBox1.Controls.Add(label2);
-        groupBox1.Controls.Add(txFirstName);
-        groupBox1.Controls.Add(label1);
-        groupBox1.Location = new Point(525, 131);
-        groupBox1.Name = "groupBox1";
-        groupBox1.Size = new Size(345, 510);
-        groupBox1.TabIndex = 1;
-        groupBox1.TabStop = false;
-        groupBox1.Text = "Assistant Details";
+        groupBoxDetails.Controls.Add(panelDetails);
+        groupBoxDetails.Controls.Add(btnDelete);
+        groupBoxDetails.Controls.Add(btnCancel);
+        groupBoxDetails.Controls.Add(btnSave);
+        groupBoxDetails.Controls.Add(btnAddNew);
+        groupBoxDetails.Location = new Point(593, 59);
+        groupBoxDetails.Name = "groupBoxDetails";
+        groupBoxDetails.Size = new Size(377, 582);
+        groupBoxDetails.TabIndex = 1;
+        groupBoxDetails.TabStop = false;
+        groupBoxDetails.Text = "Assistant Details";
         // 
-        // button3
+        // panelDetails
         // 
-        button3.Location = new Point(6, 468);
-        button3.Name = "button3";
-        button3.Size = new Size(94, 29);
-        button3.TabIndex = 12;
-        button3.Text = "Delete";
-        button3.UseVisualStyleBackColor = true;
+        panelDetails.Controls.Add(dtpHireDate);
+        panelDetails.Controls.Add(lblHireDate);
+        panelDetails.Controls.Add(txtPhoneNumber);
+        panelDetails.Controls.Add(lblPhoneNumber);
+        panelDetails.Controls.Add(txtLastName);
+        panelDetails.Controls.Add(lblLastName);
+        panelDetails.Controls.Add(txtFirstName);
+        panelDetails.Controls.Add(lblFirstName);
+        panelDetails.Location = new Point(6, 26);
+        panelDetails.Name = "panelDetails";
+        panelDetails.Size = new Size(365, 230);
+        panelDetails.TabIndex = 14;
         // 
-        // button2
+        // dtpHireDate
         // 
-        button2.Location = new Point(245, 383);
-        button2.Name = "button2";
-        button2.Size = new Size(94, 29);
-        button2.TabIndex = 11;
-        button2.Text = "Save";
-        button2.UseVisualStyleBackColor = true;
+        dtpHireDate.Location = new Point(10, 185);
+        dtpHireDate.Name = "dtpHireDate";
+        dtpHireDate.Size = new Size(346, 27);
+        dtpHireDate.TabIndex = 4;
         // 
-        // button1
+        // lblHireDate
         // 
-        button1.Location = new Point(6, 433);
-        button1.Name = "button1";
-        button1.Size = new Size(94, 29);
-        button1.TabIndex = 10;
-        button1.Text = "Add New";
-        button1.UseVisualStyleBackColor = true;
+        lblHireDate.AutoSize = true;
+        lblHireDate.Location = new Point(10, 162);
+        lblHireDate.Name = "lblHireDate";
+        lblHireDate.Size = new Size(73, 20);
+        lblHireDate.TabIndex = 8;
+        lblHireDate.Text = "Hire Date";
         // 
-        // textBox5
+        // txtPhoneNumber
         // 
-        textBox5.Location = new Point(9, 259);
-        textBox5.Name = "textBox5";
-        textBox5.Size = new Size(333, 27);
-        textBox5.TabIndex = 9;
+        txtPhoneNumber.Location = new Point(10, 128);
+        txtPhoneNumber.Name = "txtPhoneNumber";
+        txtPhoneNumber.Size = new Size(346, 27);
+        txtPhoneNumber.TabIndex = 3;
         // 
-        // txPhoneNumber
+        // lblPhoneNumber
         // 
-        txPhoneNumber.AutoSize = true;
-        txPhoneNumber.Location = new Point(9, 236);
-        txPhoneNumber.Name = "txPhoneNumber";
-        txPhoneNumber.Size = new Size(108, 20);
-        txPhoneNumber.TabIndex = 8;
-        txPhoneNumber.Text = "Phone Number";
+        lblPhoneNumber.AutoSize = true;
+        lblPhoneNumber.Location = new Point(10, 105);
+        lblPhoneNumber.Name = "lblPhoneNumber";
+        lblPhoneNumber.Size = new Size(108, 20);
+        lblPhoneNumber.TabIndex = 4;
+        lblPhoneNumber.Text = "Phone Number";
         // 
-        // textBox4
+        // txtLastName
         // 
-        textBox4.Location = new Point(9, 194);
-        textBox4.Name = "textBox4";
-        textBox4.Size = new Size(333, 27);
-        textBox4.TabIndex = 7;
+        txtLastName.Location = new Point(10, 71);
+        txtLastName.Name = "txtLastName";
+        txtLastName.Size = new Size(346, 27);
+        txtLastName.TabIndex = 2;
         // 
-        // txEmail
+        // lblLastName
         // 
-        txEmail.AutoSize = true;
-        txEmail.Location = new Point(6, 171);
-        txEmail.Name = "txEmail";
-        txEmail.Size = new Size(46, 20);
-        txEmail.TabIndex = 6;
-        txEmail.Text = "Email";
+        lblLastName.AutoSize = true;
+        lblLastName.Location = new Point(10, 48);
+        lblLastName.Name = "lblLastName";
+        lblLastName.Size = new Size(79, 20);
+        lblLastName.TabIndex = 2;
+        lblLastName.Text = "Last Name";
         // 
-        // txLastName
+        // txtFirstName
         // 
-        txLastName.Location = new Point(6, 124);
-        txLastName.Name = "txLastName";
-        txLastName.Size = new Size(333, 27);
-        txLastName.TabIndex = 3;
+        txtFirstName.Location = new Point(10, 14);
+        txtFirstName.Name = "txtFirstName";
+        txtFirstName.Size = new Size(346, 27);
+        txtFirstName.TabIndex = 1;
         // 
-        // label2
+        // lblFirstName
         // 
-        label2.AutoSize = true;
-        label2.Location = new Point(6, 101);
-        label2.Name = "label2";
-        label2.Size = new Size(79, 20);
-        label2.TabIndex = 2;
-        label2.Text = "Last Name";
+        lblFirstName.AutoSize = true;
+        lblFirstName.Location = new Point(10, -9);
+        lblFirstName.Name = "lblFirstName";
+        lblFirstName.Size = new Size(80, 20);
+        lblFirstName.TabIndex = 0;
+        lblFirstName.Text = "First Name";
         // 
-        // txFirstName
+        // btnDelete
         // 
-        txFirstName.Location = new Point(6, 60);
-        txFirstName.Name = "txFirstName";
-        txFirstName.Size = new Size(333, 27);
-        txFirstName.TabIndex = 1;
+        btnDelete.Location = new Point(277, 547);
+        btnDelete.Name = "btnDelete";
+        btnDelete.Size = new Size(94, 29);
+        btnDelete.TabIndex = 9;
+        btnDelete.Text = "Delete";
+        btnDelete.UseVisualStyleBackColor = true;
+        btnDelete.Click += btnDelete_Click;
         // 
-        // label1
+        // btnCancel
         // 
-        label1.AutoSize = true;
-        label1.Location = new Point(6, 37);
-        label1.Name = "label1";
-        label1.Size = new Size(80, 20);
-        label1.TabIndex = 0;
-        label1.Text = "First Name";
+        btnCancel.Location = new Point(16, 275);
+        btnCancel.Name = "btnCancel";
+        btnCancel.Size = new Size(94, 29);
+        btnCancel.TabIndex = 7;
+        btnCancel.Text = "Cancel";
+        btnCancel.UseVisualStyleBackColor = true;
+        btnCancel.Click += btnCancel_Click;
+        // 
+        // btnSave
+        // 
+        btnSave.Location = new Point(277, 275);
+        btnSave.Name = "btnSave";
+        btnSave.Size = new Size(94, 29);
+        btnSave.TabIndex = 6;
+        btnSave.Text = "Save";
+        btnSave.UseVisualStyleBackColor = true;
+        btnSave.Click += btnSave_Click;
+        // 
+        // btnAddNew
+        // 
+        btnAddNew.Location = new Point(16, 547);
+        btnAddNew.Name = "btnAddNew";
+        btnAddNew.Size = new Size(94, 29);
+        btnAddNew.TabIndex = 8;
+        btnAddNew.Text = "Add New";
+        btnAddNew.UseVisualStyleBackColor = true;
+        btnAddNew.Click += btnAddNew_Click;
+        // 
+        // txtSearch
+        // 
+        txtSearch.Location = new Point(69, 26);
+        txtSearch.Name = "txtSearch";
+        txtSearch.Size = new Size(413, 27);
+        txtSearch.TabIndex = 10;
+        // 
+        // btnSearch
+        // 
+        btnSearch.Location = new Point(488, 25);
+        btnSearch.Name = "btnSearch";
+        btnSearch.Size = new Size(99, 29);
+        btnSearch.TabIndex = 11;
+        btnSearch.Text = "Search";
+        btnSearch.UseVisualStyleBackColor = true;
+        btnSearch.Click += btnSearch_Click;
+        // 
+        // lblSearch
+        // 
+        lblSearch.AutoSize = true;
+        lblSearch.Location = new Point(12, 29);
+        lblSearch.Name = "lblSearch";
+        lblSearch.Size = new Size(53, 20);
+        lblSearch.TabIndex = 12;
+        lblSearch.Text = "Search";
         // 
         // AssistantForm
         // 
         AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(882, 653);
-        Controls.Add(groupBox1);
-        Controls.Add(tbCustomers);
+        ClientSize = new Size(982, 653);
+        Controls.Add(lblSearch);
+        Controls.Add(btnSearch);
+        Controls.Add(txtSearch);
+        Controls.Add(groupBoxDetails);
+        Controls.Add(dataGridViewAssistants);
         Name = "AssistantForm";
-        Text = "AssistantForm";
-        ((ISupportInitialize)tbCustomers).EndInit();
-        groupBox1.ResumeLayout(false);
-        groupBox1.PerformLayout();
+        Text = "Manage Assistants";
+        Load += AssistantForm_Load;
+        ((ISupportInitialize)dataGridViewAssistants).EndInit();
+        groupBoxDetails.ResumeLayout(false);
+        panelDetails.ResumeLayout(false);
+        panelDetails.PerformLayout();
         ResumeLayout(false);
+        PerformLayout();
     }
 
     #endregion
 
-    private DataGridView tbCustomers;
-    private GroupBox groupBox1;
-    private TextBox txLastName;
-    private Label label2;
-    private TextBox txFirstName;
-    private Label label1;
-    private TextBox textBox5;
-    private Label txPhoneNumber;
-    private TextBox textBox4;
-    private Label txEmail;
-    private Button button2;
-    private Button button1;
-    private Button button3;
+    private DataGridView dataGridViewAssistants;
+    private GroupBox groupBoxDetails;
+    private TextBox txtLastName;
+    private Label lblLastName;
+    private TextBox txtFirstName;
+    private Label lblFirstName;
+    private TextBox txtPhoneNumber;
+    private Label lblPhoneNumber;
+    private Button btnSave;
+    private Button btnAddNew;
+    private Button btnDelete;
+    private TextBox txtSearch;
+    private Button btnSearch;
+    private Label lblSearch;
+    private Button btnCancel;
+    private Panel panelDetails;
+    private DateTimePicker dtpHireDate;
+    private Label lblHireDate;
 }

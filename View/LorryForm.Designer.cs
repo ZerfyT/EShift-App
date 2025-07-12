@@ -2,7 +2,7 @@
 
 namespace EShift_App.View;
 
-partial class DriverForm
+partial class LorryForm
 {
     /// <summary>
     /// Required designer variable.
@@ -30,17 +30,15 @@ partial class DriverForm
     /// </summary>
     private void InitializeComponent()
     {
-        dataGridViewDrivers = new DataGridView();
+        dataGridViewLorries = new DataGridView();
         groupBoxDetails = new GroupBox();
         panelDetails = new Panel();
-        txtLicenseNumber = new TextBox();
-        lblLicenseNumber = new Label();
-        txtPhoneNumber = new TextBox();
-        lblPhoneNumber = new Label();
-        txtLastName = new TextBox();
-        lblLastName = new Label();
-        txtFirstName = new TextBox();
-        lblFirstName = new Label();
+        numCapacity = new NumericUpDown();
+        lblCapacity = new Label();
+        txtModel = new TextBox();
+        lblModel = new Label();
+        txtRegistrationNumber = new TextBox();
+        lblRegistrationNumber = new Label();
         btnDelete = new Button();
         btnCancel = new Button();
         btnSave = new Button();
@@ -48,23 +46,24 @@ partial class DriverForm
         txtSearch = new TextBox();
         btnSearch = new Button();
         lblSearch = new Label();
-        ((ISupportInitialize)dataGridViewDrivers).BeginInit();
+        ((ISupportInitialize)dataGridViewLorries).BeginInit();
         groupBoxDetails.SuspendLayout();
         panelDetails.SuspendLayout();
+        ((ISupportInitialize)numCapacity).BeginInit();
         SuspendLayout();
         // 
-        // dataGridViewDrivers
+        // dataGridViewLorries
         // 
-        dataGridViewDrivers.AllowUserToAddRows = false;
-        dataGridViewDrivers.AllowUserToDeleteRows = false;
-        dataGridViewDrivers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-        dataGridViewDrivers.Location = new Point(12, 59);
-        dataGridViewDrivers.Name = "dataGridViewDrivers";
-        dataGridViewDrivers.ReadOnly = true;
-        dataGridViewDrivers.RowHeadersWidth = 51;
-        dataGridViewDrivers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-        dataGridViewDrivers.Size = new Size(575, 582);
-        dataGridViewDrivers.TabIndex = 0;
+        dataGridViewLorries.AllowUserToAddRows = false;
+        dataGridViewLorries.AllowUserToDeleteRows = false;
+        dataGridViewLorries.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+        dataGridViewLorries.Location = new Point(12, 59);
+        dataGridViewLorries.Name = "dataGridViewLorries";
+        dataGridViewLorries.ReadOnly = true;
+        dataGridViewLorries.RowHeadersWidth = 51;
+        dataGridViewLorries.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+        dataGridViewLorries.Size = new Size(575, 582);
+        dataGridViewLorries.TabIndex = 0;
         // 
         // groupBoxDetails
         // 
@@ -78,86 +77,70 @@ partial class DriverForm
         groupBoxDetails.Size = new Size(377, 582);
         groupBoxDetails.TabIndex = 1;
         groupBoxDetails.TabStop = false;
-        groupBoxDetails.Text = "Driver Details";
+        groupBoxDetails.Text = "Lorry Details";
         // 
         // panelDetails
         // 
-        panelDetails.Controls.Add(txtLicenseNumber);
-        panelDetails.Controls.Add(lblLicenseNumber);
-        panelDetails.Controls.Add(txtPhoneNumber);
-        panelDetails.Controls.Add(lblPhoneNumber);
-        panelDetails.Controls.Add(txtLastName);
-        panelDetails.Controls.Add(lblLastName);
-        panelDetails.Controls.Add(txtFirstName);
-        panelDetails.Controls.Add(lblFirstName);
+        panelDetails.Controls.Add(numCapacity);
+        panelDetails.Controls.Add(lblCapacity);
+        panelDetails.Controls.Add(txtModel);
+        panelDetails.Controls.Add(lblModel);
+        panelDetails.Controls.Add(txtRegistrationNumber);
+        panelDetails.Controls.Add(lblRegistrationNumber);
         panelDetails.Location = new Point(6, 26);
         panelDetails.Name = "panelDetails";
-        panelDetails.Size = new Size(365, 230);
+        panelDetails.Size = new Size(365, 180);
         panelDetails.TabIndex = 14;
         // 
-        // txtLicenseNumber
+        // numCapacity
         // 
-        txtLicenseNumber.Location = new Point(10, 185);
-        txtLicenseNumber.Name = "txtLicenseNumber";
-        txtLicenseNumber.Size = new Size(346, 27);
-        txtLicenseNumber.TabIndex = 4;
+        numCapacity.DecimalPlaces = 2;
+        numCapacity.Location = new Point(10, 137);
+        numCapacity.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+        numCapacity.Name = "numCapacity";
+        numCapacity.Size = new Size(346, 27);
+        numCapacity.TabIndex = 3;
         // 
-        // lblLicenseNumber
+        // lblCapacity
         // 
-        lblLicenseNumber.AutoSize = true;
-        lblLicenseNumber.Location = new Point(10, 162);
-        lblLicenseNumber.Name = "lblLicenseNumber";
-        lblLicenseNumber.Size = new Size(115, 20);
-        lblLicenseNumber.TabIndex = 8;
-        lblLicenseNumber.Text = "License Number";
+        lblCapacity.AutoSize = true;
+        lblCapacity.Location = new Point(10, 114);
+        lblCapacity.Name = "lblCapacity";
+        lblCapacity.Size = new Size(170, 20);
+        lblCapacity.TabIndex = 4;
+        lblCapacity.Text = "Capacity (kg or cubic m)";
         // 
-        // txtPhoneNumber
+        // txtModel
         // 
-        txtPhoneNumber.Location = new Point(10, 128);
-        txtPhoneNumber.Name = "txtPhoneNumber";
-        txtPhoneNumber.Size = new Size(346, 27);
-        txtPhoneNumber.TabIndex = 3;
+        txtModel.Location = new Point(10, 80);
+        txtModel.Name = "txtModel";
+        txtModel.Size = new Size(346, 27);
+        txtModel.TabIndex = 2;
         // 
-        // lblPhoneNumber
+        // lblModel
         // 
-        lblPhoneNumber.AutoSize = true;
-        lblPhoneNumber.Location = new Point(10, 105);
-        lblPhoneNumber.Name = "lblPhoneNumber";
-        lblPhoneNumber.Size = new Size(108, 20);
-        lblPhoneNumber.TabIndex = 4;
-        lblPhoneNumber.Text = "Phone Number";
+        lblModel.AutoSize = true;
+        lblModel.Location = new Point(10, 57);
+        lblModel.Name = "lblModel";
+        lblModel.Size = new Size(52, 20);
+        lblModel.TabIndex = 2;
+        lblModel.Text = "Model";
         // 
-        // txtLastName
+        // txtRegistrationNumber
         // 
-        txtLastName.Location = new Point(10, 71);
-        txtLastName.Name = "txtLastName";
-        txtLastName.Size = new Size(346, 27);
-        txtLastName.TabIndex = 2;
+        txtRegistrationNumber.Location = new Point(10, 23);
+        txtRegistrationNumber.Name = "txtRegistrationNumber";
+        txtRegistrationNumber.Size = new Size(346, 27);
+        txtRegistrationNumber.TabIndex = 1;
         // 
-        // lblLastName
+        // lblRegistrationNumber
         // 
-        lblLastName.AutoSize = true;
-        lblLastName.Location = new Point(10, 48);
-        lblLastName.Name = "lblLastName";
-        lblLastName.Size = new Size(79, 20);
-        lblLastName.TabIndex = 2;
-        lblLastName.Text = "Last Name";
-        // 
-        // txtFirstName
-        // 
-        txtFirstName.Location = new Point(10, 14);
-        txtFirstName.Name = "txtFirstName";
-        txtFirstName.Size = new Size(346, 27);
-        txtFirstName.TabIndex = 1;
-        // 
-        // lblFirstName
-        // 
-        lblFirstName.AutoSize = true;
-        lblFirstName.Location = new Point(10, -9);
-        lblFirstName.Name = "lblFirstName";
-        lblFirstName.Size = new Size(80, 20);
-        lblFirstName.TabIndex = 0;
-        lblFirstName.Text = "First Name";
+        lblRegistrationNumber.AutoSize = true;
+        lblRegistrationNumber.Location = new Point(10, 0);
+        lblRegistrationNumber.Name = "lblRegistrationNumber";
+        lblRegistrationNumber.Size = new Size(147, 20);
+        lblRegistrationNumber.TabIndex = 0;
+        lblRegistrationNumber.Text = "Registration Number";
         // 
         // btnDelete
         // 
@@ -171,7 +154,7 @@ partial class DriverForm
         // 
         // btnCancel
         // 
-        btnCancel.Location = new Point(16, 275);
+        btnCancel.Location = new Point(16, 225);
         btnCancel.Name = "btnCancel";
         btnCancel.Size = new Size(94, 29);
         btnCancel.TabIndex = 7;
@@ -181,7 +164,7 @@ partial class DriverForm
         // 
         // btnSave
         // 
-        btnSave.Location = new Point(277, 275);
+        btnSave.Location = new Point(277, 225);
         btnSave.Name = "btnSave";
         btnSave.Size = new Size(94, 29);
         btnSave.TabIndex = 6;
@@ -225,7 +208,7 @@ partial class DriverForm
         lblSearch.TabIndex = 12;
         lblSearch.Text = "Search";
         // 
-        // DriverForm
+        // LorryForm
         // 
         AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
@@ -234,28 +217,27 @@ partial class DriverForm
         Controls.Add(btnSearch);
         Controls.Add(txtSearch);
         Controls.Add(groupBoxDetails);
-        Controls.Add(dataGridViewDrivers);
-        Name = "DriverForm";
-        Text = "Manage Drivers";
-        Load += DriverForm_Load;
-        ((ISupportInitialize)dataGridViewDrivers).EndInit();
+        Controls.Add(dataGridViewLorries);
+        Name = "LorryForm";
+        Text = "Manage Lorries";
+        Load += LorryForm_Load;
+        ((ISupportInitialize)dataGridViewLorries).EndInit();
         groupBoxDetails.ResumeLayout(false);
         panelDetails.ResumeLayout(false);
         panelDetails.PerformLayout();
+        ((ISupportInitialize)numCapacity).EndInit();
         ResumeLayout(false);
         PerformLayout();
     }
 
     #endregion
 
-    private DataGridView dataGridViewDrivers;
+    private DataGridView dataGridViewLorries;
     private GroupBox groupBoxDetails;
-    private TextBox txtLastName;
-    private Label lblLastName;
-    private TextBox txtFirstName;
-    private Label lblFirstName;
-    private TextBox txtPhoneNumber;
-    private Label lblPhoneNumber;
+    private TextBox txtModel;
+    private Label lblModel;
+    private TextBox txtRegistrationNumber;
+    private Label lblRegistrationNumber;
     private Button btnSave;
     private Button btnAddNew;
     private Button btnDelete;
@@ -264,6 +246,6 @@ partial class DriverForm
     private Label lblSearch;
     private Button btnCancel;
     private Panel panelDetails;
-    private TextBox txtLicenseNumber;
-    private Label lblLicenseNumber;
+    private NumericUpDown numCapacity;
+    private Label lblCapacity;
 }

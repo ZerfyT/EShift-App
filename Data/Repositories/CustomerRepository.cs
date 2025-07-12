@@ -1,22 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EShift_App.Model;
+﻿using EShift_App.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace EShift_App.Data.Repositories
 {
-    public class CustomerRepository: Repository<Customer>, ICustomerRepository
+    public class CustomerRepository : Repository<Customer>, ICustomerRepository
     {
         public CustomerRepository(AppDbContext context) : base(context)
         {
         }
 
-        public async Task<Customer?> GetCustomerByPhoneNumberAsync(string phoneNumber)
+        public async Task<bool> PhoneNumberExistsAsync(string phoneNumber, int? customerIdToIgnore = null)
         {
-            return await _context.Customers.FirstOrDefaultAsync(c => c.PhoneNumber == phoneNumber);
+            var query = _context.Customers.AsQueryable();
+
+            if (customerIdToIgnore.HasValue)
+            {
+                query = query.Where(c => c.CustomerID != customerIdToIgnore.Value);
+            }
+
+            return await query.AnyAsync(c => c.PhoneNumber == phoneNumber);
+        }
+
+        public async Task<IEnumerable<Customer>> SearchAsync(string searchText)
+        {
+            var trimmedSearchText = searchText?.Trim();
+
+            if (string.IsNullOrWhiteSpace(trimmedSearchText))
+            {
+                return await GetAllAsync();
+            }
+
+            var searchTextLower = trimmedSearchText.ToLower();
+
+            return await _context.Customers
+                .Where(c => c.FirstName.ToLower().Contains(searchTextLower) ||
+                            c.LastName.ToLower().Contains(searchTextLower) ||
+                            c.PhoneNumber.Contains(searchTextLower))
+                .ToListAsync();
         }
     }
 }

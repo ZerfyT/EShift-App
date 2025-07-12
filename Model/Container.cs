@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace EShift_App.Model
 {
-    internal class Container
+    public class Container
     {
         [Key]
         public int ContainerID { get; set; }

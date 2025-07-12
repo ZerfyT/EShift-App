@@ -1,22 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EShift_App.Model
 {
-    internal class Customer
+    public class Customer
     {
         [Key]
         public int CustomerID { get; set; }
+
+        [Required]
+        [StringLength(50)]
         public string FirstName { get; set; }
+
+        [Required]
+        [StringLength(50)]
         public string LastName { get; set; }
+
+        [Required]
+        [StringLength(255)]
         public string Address { get; set; }
+
+        [Required]
+        [StringLength(20)]
         public string PhoneNumber { get; set; }
+
+        [StringLength(100)]
+        [EmailAddress]
         public string? Email { get; set; }
+
         public DateTime RegistrationDate { get; set; }
-        public ICollection<Job> Jobs { get; set; } = new List<Job>(); 
+
+        // Read-only property to display the customer's full name
+        [NotMapped] // This ensures EF Core doesn't try to create a column for it
+        public string FullName => $"{FirstName} {LastName}";
+
+        public ICollection<Job> Jobs { get; set; } = new List<Job>();
     }
 }

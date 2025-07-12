@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace EShift_App.View
 {
-    public partial class MDIParent1 : Form
+    public partial class Layout : Form
     {
         private int childFormNumber = 0;
+        private readonly IServiceProvider _serviceProvider;
 
-        public MDIParent1()
+        public Layout(IServiceProvider serviceProvider)
         {
             InitializeComponent();
+            _serviceProvider = serviceProvider;
         }
 
         private void ShowNewForm(object sender, EventArgs e)
@@ -49,31 +43,47 @@ namespace EShift_App.View
             }
         }
 
+        private void customersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var customerForm = _serviceProvider.GetRequiredService<CustomerForm>();
+            customerForm.MdiParent = this;
+            customerForm.Show();
+        }
+
+        private void driversToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var driverForm = _serviceProvider.GetRequiredService<DriverForm>();
+            driverForm.MdiParent = this;
+            driverForm.Show();
+        }
+
+        private void assistantsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var assistantForm = _serviceProvider.GetRequiredService<AssistantForm>();
+            assistantForm.MdiParent = this;
+            assistantForm.Show();
+        }
+
+        // You can add similar methods for other menu items
+        private void jobsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Example for opening Jobs form
+            // var jobsForm = _serviceProvider.GetRequiredService<JobsForm>();
+            // jobsForm.MdiParent = this;
+            // jobsForm.Show();
+        }
+
+        private void lorriersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var lorryForm = _serviceProvider.GetRequiredService<LorryForm>();
+            lorryForm.MdiParent = this;
+            lorryForm.Show();
+        }
+
+        // Default event handlers from the template
         private void ExitToolsStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void CutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void PasteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void ToolBarToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            toolStrip.Visible = toolBarToolStripMenuItem.Checked;
-        }
-
-        private void StatusBarToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            statusStrip.Visible = statusBarToolStripMenuItem.Checked;
         }
 
         private void CascadeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -89,11 +99,6 @@ namespace EShift_App.View
         private void TileHorizontalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LayoutMdi(MdiLayout.TileHorizontal);
-        }
-
-        private void ArrangeIconsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            LayoutMdi(MdiLayout.ArrangeIcons);
         }
 
         private void CloseAllToolStripMenuItem_Click(object sender, EventArgs e)

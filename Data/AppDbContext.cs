@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EShift_App.Model;
+﻿using EShift_App.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace EShift_App.Data
 {
-    public class AppDbContext:DbContext
+    public class AppDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options): base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
 
