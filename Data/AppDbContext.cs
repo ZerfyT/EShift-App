@@ -15,29 +15,78 @@ namespace EShift_App.Data
         public DbSet<Driver> Drivers { get; set; }
         public DbSet<Assistant> Assistants { get; set; }
         public DbSet<Lorry> Lorries { get; set; }
-        public DbSet<Container> Containers { get; set; }
+        //public DbSet<Container> Containers { get; set; }
         public DbSet<TransportUnit> TransportUnits { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Customer>()
+                .HasIndex(c => c.Email)
+                .IsUnique();
+
+            modelBuilder.Entity<Customer>()
+                .HasIndex(c => c.PhoneNumber)
+                .IsUnique();
+
+            modelBuilder.Entity<Driver>()
+                .HasIndex(d => d.LicenseNumber)
+                .IsUnique();
+
+            modelBuilder.Entity<Lorry>()
+                .HasIndex(l => l.RegistrationNumber)
+                .IsUnique();
+
+            //modelBuilder.Entity<Container>()
+            //    .HasIndex(c => c.ContainerNumber)
+            //    .IsUnique();
+
             modelBuilder.Entity<Job>()
-                .HasOne(j => j.Customer)
-                .WithMany(c => c.Jobs)
-                .HasForeignKey(j => j.CustomerID);
+                .HasIndex(j => j.JobNumber)
+                .IsUnique();
+
             modelBuilder.Entity<Load>()
-                .HasOne(l => l.Job)
-                .WithMany(j => j.Loads)
-                .HasForeignKey(l => l.JobID);
+                .HasIndex(l => l.LoadNumber)
+                .IsUnique();
+
+            // Customer -> Jobs (One-to-Many)
+            modelBuilder.Entity<Customer>()
+                .HasMany(c => c.Jobs)
+                .WithOne(j => j.Customer)
+                .HasForeignKey(j => j.CustomerID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Job -> Loads (One-to-Many)
+            modelBuilder.Entity<Job>()
+                .HasMany(j => j.Loads)
+                .WithOne(l => l.Job)
+                .HasForeignKey(l => l.JobID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Load -> TransportUnit (One-to-One, optional)
             modelBuilder.Entity<Load>()
                 .HasOne(l => l.TransportUnit)
                 .WithMany()
-                .HasForeignKey(l => l.TransportUnitID);
-            modelBuilder.Entity<Load>()
-                .HasOne(l => l.Container)
-                .WithMany(c => c.Loads)
-                .HasForeignKey(l => l.ContainerID);
+                .HasForeignKey(l => l.TransportUnitID)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            // TransportUnit
+            modelBuilder.Entity<TransportUnit>()
+                .HasOne(tu => tu.Lorry)
+                .WithMany()
+                .HasForeignKey(tu => tu.LorryID);
+
+            modelBuilder.Entity<TransportUnit>()
+                .HasOne(tu => tu.Driver)
+                .WithMany()
+                .HasForeignKey(tu => tu.DriverID);
+
+            modelBuilder.Entity<TransportUnit>()
+                .HasOne(tu => tu.Assistant)
+                .WithMany()
+                .HasForeignKey(tu => tu.AssistantID);
         }
     }
 }

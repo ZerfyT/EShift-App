@@ -6,5 +6,6 @@ namespace EShift_App.Data.Repositories
     {
         Task<IEnumerable<Customer>> SearchAsync(string searchText);
         Task<bool> PhoneNumberExistsAsync(string phoneNumber, int? customerIdToIgnore = null);
+        Task<Customer?> GetByEmailAsync(string email);
     }
 }

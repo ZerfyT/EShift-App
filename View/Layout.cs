@@ -80,6 +80,13 @@ namespace EShift_App.View
             lorryForm.Show();
         }
 
+        private void newJobToolStripButton_Click(object sender, EventArgs e)
+        {
+            var customerForm = _serviceProvider.GetRequiredService<CustomerDashboard>();
+            customerForm.MdiParent = this;
+            customerForm.Show();
+        }
+
         // Default event handlers from the template
         private void ExitToolsStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -109,9 +116,11 @@ namespace EShift_App.View
             }
         }
 
-        private void MDIParent1_Load(object sender, EventArgs e)
+        private void Layout_Load(object sender, EventArgs e)
         {
-
+            var adminDashboardForm = _serviceProvider.GetRequiredService<AdminDashboard>();
+            adminDashboardForm.MdiParent = this;
+            adminDashboardForm.Show();
         }
     }
 }

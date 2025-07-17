@@ -38,5 +38,11 @@ namespace EShift_App.Data.Repositories
                             c.PhoneNumber.Contains(searchTextLower))
                 .ToListAsync();
         }
+
+        public async Task<Customer?> GetByEmailAsync(string email)
+        {
+            return await _context.Customers
+                .FirstOrDefaultAsync(c => c.Email.ToLower() == email.ToLower());
+        }
     }
 }

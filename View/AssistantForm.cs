@@ -31,7 +31,6 @@ public partial class AssistantForm : Form
         dataGridViewAssistants.DataSource = _assistantsBindingList;
         dataGridViewAssistants.AutoGenerateColumns = false;
 
-        // Define columns for the Assistant model
         dataGridViewAssistants.Columns.Clear();
         dataGridViewAssistants.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "FirstName", HeaderText = "First Name", Width = 120 });
         dataGridViewAssistants.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "LastName", HeaderText = "Last Name", Width = 120 });
@@ -101,9 +100,7 @@ public partial class AssistantForm : Form
     {
         if (!ValidateInput()) return;
 
-        // ToDo: Implement a PhoneNumberExistsAsync method in IAssistantRepository for duplicate checks
-
-        if (_selectedAssistant == null) // Add new assistant
+        if (_selectedAssistant == null)
         {
             var newAssistant = new Assistant
             {
@@ -115,7 +112,7 @@ public partial class AssistantForm : Form
             await _assistantRepository.AddAsync(newAssistant);
             _assistantsBindingList.Add(newAssistant);
         }
-        else // Update existing assistant
+        else
         {
             _selectedAssistant.FirstName = txtFirstName.Text;
             _selectedAssistant.LastName = txtLastName.Text;
@@ -189,5 +186,4 @@ public partial class AssistantForm : Form
     }
 }
 
-// This enum can be shared across forms, e.g., in its own file
-// internal enum FormState { Viewing, Adding, Editing }
+ //private enum FormState { Viewing, Adding, Editing }

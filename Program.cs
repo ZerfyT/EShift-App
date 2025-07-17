@@ -1,6 +1,8 @@
 using EShift_App.Data;
 using EShift_App.Data.Repositories;
+using EShift_App.Model;
 using EShift_App.View;
+using EShift_App.View.Auth;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,39 +13,13 @@ namespace EShift_App
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
         [STAThread]
         static async Task Main()
         {
             ApplicationConfiguration.Initialize();
 
-            var host = Host.CreateDefaultBuilder()
-                .ConfigureAppConfiguration((context, builder) =>
-                {
-                    builder.SetBasePath(Directory.GetCurrentDirectory())
-                           .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-                })
-                .ConfigureServices((context, services) =>
-                {
-                    var connectionString = context.Configuration.GetConnectionString("DefaultConnection");
-                    services.AddDbContext<AppDbContext>(options =>
-                        options.UseMySQL(connectionString));
-
-                    services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-                    services.AddScoped<ICustomerRepository, CustomerRepository>();
-                    services.AddScoped<IDriverRepository, DriverRepository>();
-                    services.AddScoped<IAssistantRepository, AssistantRepository>();
-                    services.AddScoped<ILorryRepository, LorryRepository>();
-
-                    services.AddSingleton<Layout>();
-                    services.AddTransient<CustomerForm>();
-                    services.AddTransient<DriverForm>();
-                    services.AddTransient<AssistantForm>();
-                    services.AddTransient<LorryForm>();
-                })
-                .Build();
+            var host = CreateHostBuilder().Build();
+            var services = host.Services;
 
             // ** Check the database connection before start **
             if (!await CanConnectToDatabase(host.Services))
@@ -56,13 +32,66 @@ namespace EShift_App
                 );
                 return;
             }
+
+            // ** Start the login flow **
+            var loginForm = services.GetRequiredService<LoginForm>();
+
+            if (loginForm.ShowDialog() == DialogResult.OK)
+            {
+                var loggedInUser = loginForm.LoggedInCustomer;
+
+                if (loggedInUser.Role == "Admin")
+                {
+                    var adminDashboard = services.GetRequiredService<Layout>();
+                    Application.Run(adminDashboard);
+                }
+                else
+                {
+                    var customerDashboard = new CustomerDashboard(
+                        services.GetRequiredService<IRepository<Job>>(),
+                        services.GetRequiredService<IRepository<Load>>(),
+                        loggedInUser
+                    );
+                    Application.Run(customerDashboard);
+                }
+            }
             else
             {
-                MessageBox.Show("Database connection successful!", "Connection Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Application.Exit();
             }
 
-            var mdiForm = host.Services.GetRequiredService<Layout>();
-            Application.Run(mdiForm);
+            // ** Configures all the application's services for dependency injection. **
+            static IHostBuilder CreateHostBuilder() =>
+                Host.CreateDefaultBuilder()
+                .ConfigureServices((context, services) =>
+                {
+                    var connectionString = context.Configuration.GetConnectionString("DefaultConnection");
+                    services.AddDbContext<AppDbContext>(options =>
+                       options.UseMySQL(connectionString));
+
+                    services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+                    services.AddScoped<ICustomerRepository, CustomerRepository>();
+                    services.AddScoped<IDriverRepository, DriverRepository>();
+                    services.AddScoped<IAssistantRepository, AssistantRepository>();
+                    services.AddScoped<ILorryRepository, LorryRepository>();
+                    services.AddScoped<ILoadRepository, LoadRepository>();
+                    services.AddScoped<IJobRepository, JobRepository>();
+                    services.AddScoped<ITransportUnitRepository, TransportUnitRepository>();
+
+                    services.AddSingleton<Layout>();
+                    services.AddTransient<CustomerForm>();
+                    services.AddTransient<DriverForm>();
+                    services.AddTransient<AssistantForm>();
+                    services.AddTransient<LorryForm>();
+                    //services.AddTransient<JobForm>();
+                    services.AddTransient<CustomerDashboard>();
+                    services.AddTransient<AdminDashboard>();
+                    services.AddTransient<LoginForm>();
+                    services.AddTransient<RegisterForm>();
+                });
+
+            //var mdiForm = host.Services.GetRequiredService<Layout>();
+            //Application.Run(mdiForm);
         }
 
         private static async Task<bool> CanConnectToDatabase(IServiceProvider services)

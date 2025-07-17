@@ -109,41 +109,41 @@ namespace EShift_App.View
             // customersToolStripMenuItem
             // 
             customersToolStripMenuItem.Name = "customersToolStripMenuItem";
-            customersToolStripMenuItem.Size = new Size(224, 26);
+            customersToolStripMenuItem.Size = new Size(162, 26);
             customersToolStripMenuItem.Text = "&Customers";
             customersToolStripMenuItem.Click += customersToolStripMenuItem_Click;
             // 
             // jobsToolStripMenuItem
             // 
             jobsToolStripMenuItem.Name = "jobsToolStripMenuItem";
-            jobsToolStripMenuItem.Size = new Size(224, 26);
+            jobsToolStripMenuItem.Size = new Size(162, 26);
             jobsToolStripMenuItem.Text = "&Jobs";
             jobsToolStripMenuItem.Click += jobsToolStripMenuItem_Click;
             // 
             // containersToolStripMenuItem
             // 
             containersToolStripMenuItem.Name = "containersToolStripMenuItem";
-            containersToolStripMenuItem.Size = new Size(224, 26);
+            containersToolStripMenuItem.Size = new Size(162, 26);
             containersToolStripMenuItem.Text = "C&ontainers";
             // 
             // driverToolStripMenuItem
             // 
             driverToolStripMenuItem.Name = "driverToolStripMenuItem";
-            driverToolStripMenuItem.Size = new Size(224, 26);
+            driverToolStripMenuItem.Size = new Size(162, 26);
             driverToolStripMenuItem.Text = "Drivers";
             driverToolStripMenuItem.Click += driversToolStripMenuItem_Click;
             // 
             // AssistantToolStripMenuItem
             // 
             AssistantToolStripMenuItem.Name = "AssistantToolStripMenuItem";
-            AssistantToolStripMenuItem.Size = new Size(224, 26);
+            AssistantToolStripMenuItem.Size = new Size(162, 26);
             AssistantToolStripMenuItem.Text = "Assistants";
             AssistantToolStripMenuItem.Click += assistantsToolStripMenuItem_Click;
             // 
             // lorriesToolStripMenuItem
             // 
             lorriesToolStripMenuItem.Name = "lorriesToolStripMenuItem";
-            lorriesToolStripMenuItem.Size = new Size(224, 26);
+            lorriesToolStripMenuItem.Size = new Size(162, 26);
             lorriesToolStripMenuItem.Text = "Lorries";
             lorriesToolStripMenuItem.Click += lorriersToolStripMenuItem_Click;
             // 
@@ -211,6 +211,7 @@ namespace EShift_App.View
             btnNewJob.Name = "btnNewJob";
             btnNewJob.Size = new Size(70, 24);
             btnNewJob.Text = "New Job";
+            btnNewJob.Click += newJobToolStripButton_Click;
             // 
             // btnNewCustomer
             // 
@@ -250,6 +251,7 @@ namespace EShift_App.View
             Name = "Layout";
             Text = "e-Shift Management System";
             WindowState = FormWindowState.Maximized;
+            Load += Layout_Load;
             menuStrip.ResumeLayout(false);
             menuStrip.PerformLayout();
             toolStrip.ResumeLayout(false);

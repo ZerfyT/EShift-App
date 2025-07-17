@@ -30,8 +30,10 @@ namespace EShift_App.Model
 
         public DateTime RegistrationDate { get; set; }
 
-        // Read-only property to display the customer's full name
-        [NotMapped] // This ensures EF Core doesn't try to create a column for it
+        public string PasswordHash { get; set; }
+        public string Role { get; set; }
+
+        [NotMapped]
         public string FullName => $"{FirstName} {LastName}";
 
         public ICollection<Job> Jobs { get; set; } = new List<Job>();

@@ -25,7 +25,7 @@
     <Compile Update="View\CustomerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="View\DashboardForm.cs">
+    <Compile Update="View\AdminDashboard.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

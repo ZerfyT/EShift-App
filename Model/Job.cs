@@ -12,7 +12,9 @@ namespace EShift_App.Model
         public string StartLocation { get; set; }
         public string Destination { get; set; }
         public DateTime JobDate { get; set; }
-        public string Status { get; set; } // Consider using an enum here
+        public string GoodsDescription { get; set; }
+        public decimal EstimatedWeight { get; set; }
+        public string Status { get; set; }
 
         [ForeignKey("CustomerID")]
         public Customer Customer { get; set; }

@@ -188,6 +188,7 @@ partial class LorryForm
         txtSearch.Name = "txtSearch";
         txtSearch.Size = new Size(413, 27);
         txtSearch.TabIndex = 10;
+        txtSearch.Click += btnSearch_Click;
         // 
         // btnSearch
         // 
@@ -221,6 +222,7 @@ partial class LorryForm
         Name = "LorryForm";
         Text = "Manage Lorries";
         Load += LorryForm_Load;
+        Click += LorryForm_Load;
         ((ISupportInitialize)dataGridViewLorries).EndInit();
         groupBoxDetails.ResumeLayout(false);
         panelDetails.ResumeLayout(false);

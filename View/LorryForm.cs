@@ -29,7 +29,6 @@ public partial class LorryForm : Form
         dataGridViewLorries.DataSource = _lorriesBindingList;
         dataGridViewLorries.AutoGenerateColumns = false;
 
-        // Define columns for the Lorry model
         dataGridViewLorries.Columns.Clear();
         dataGridViewLorries.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "RegistrationNumber", HeaderText = "Registration Number", Width = 150 });
         dataGridViewLorries.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Model", HeaderText = "Model", Width = 150 });
@@ -103,7 +102,7 @@ public partial class LorryForm : Form
             return;
         }
 
-        if (_selectedLorry == null) // Add new lorry
+        if (_selectedLorry == null)
         {
             var newLorry = new Lorry
             {
@@ -114,7 +113,7 @@ public partial class LorryForm : Form
             await _lorryRepository.AddAsync(newLorry);
             _lorriesBindingList.Add(newLorry);
         }
-        else // Update existing lorry
+        else
         {
             _selectedLorry.RegistrationNumber = txtRegistrationNumber.Text;
             _selectedLorry.Model = txtModel.Text;

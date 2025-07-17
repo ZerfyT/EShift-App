@@ -31,7 +31,6 @@ public partial class DriverForm : Form
         dataGridViewDrivers.DataSource = _driversBindingList;
         dataGridViewDrivers.AutoGenerateColumns = false;
 
-        // Define columns for the Driver model
         dataGridViewDrivers.Columns.Clear();
         dataGridViewDrivers.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "FirstName", HeaderText = "First Name", Width = 120 });
         dataGridViewDrivers.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "LastName", HeaderText = "Last Name", Width = 120 });
@@ -108,7 +107,7 @@ public partial class DriverForm : Form
             return;
         }
 
-        if (_selectedDriver == null) // Add new driver
+        if (_selectedDriver == null)
         {
             var newDriver = new Driver
             {
@@ -121,7 +120,7 @@ public partial class DriverForm : Form
             await _driverRepository.AddAsync(newDriver);
             _driversBindingList.Add(newDriver);
         }
-        else // Update existing driver
+        else
         {
             _selectedDriver.FirstName = txtFirstName.Text;
             _selectedDriver.LastName = txtLastName.Text;

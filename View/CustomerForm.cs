@@ -15,13 +15,11 @@ public partial class CustomerForm : Form
         InitializeComponent();
         _customerRepository = customerRepository;
 
-        // Initialize the binding list for real-time UI updates
         _customersBindingList = new BindingList<Customer>();
     }
 
     private async void CustomerForm_Load(object sender, EventArgs e)
     {
-        // Setup DataGridView and load initial data
         SetupDataGridView();
         await LoadCustomersAsync();
         SetFormState(FormState.Viewing);
@@ -29,18 +27,15 @@ public partial class CustomerForm : Form
 
     private void SetupDataGridView()
     {
-        // Set the data source once. The BindingList handles updates.
         dataGridViewCustomers.DataSource = _customersBindingList;
         dataGridViewCustomers.AutoGenerateColumns = false;
 
-        // Define columns manually for better control
         dataGridViewCustomers.Columns.Clear();
         dataGridViewCustomers.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "FirstName", HeaderText = "First Name", Width = 120 });
         dataGridViewCustomers.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "LastName", HeaderText = "Last Name", Width = 120 });
         dataGridViewCustomers.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "PhoneNumber", HeaderText = "Phone Number", Width = 120 });
         dataGridViewCustomers.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Email", HeaderText = "Email", AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill });
 
-        // Handle selection change
         dataGridViewCustomers.SelectionChanged += DataGridViewCustomers_SelectionChanged;
     }
 
@@ -87,7 +82,6 @@ public partial class CustomerForm : Form
         dataGridViewCustomers.ClearSelection();
     }
 
-    // Search button click event
     private async void btnSearch_Click(object sender, EventArgs e)
     {
         var customers = await _customerRepository.SearchAsync(txtSearch.Text);
@@ -98,18 +92,16 @@ public partial class CustomerForm : Form
         }
     }
 
-    // "Add New" button to prepare for adding a new customer
     private void btnAddNew_Click(object sender, EventArgs e)
     {
         SetFormState(FormState.Adding);
     }
 
-    // "Save" button to add a new or update an existing customer
     private async void btnSave_Click(object sender, EventArgs e)
     {
         if (!ValidateInput()) return;
 
-        if (_selectedCustomer == null) // We are adding a new customer
+        if (_selectedCustomer == null)
         {
             var newCustomer = new Customer
             {
@@ -121,9 +113,9 @@ public partial class CustomerForm : Form
                 RegistrationDate = DateTime.Now
             };
             await _customerRepository.AddAsync(newCustomer);
-            _customersBindingList.Add(newCustomer); // Add to list for UI update
+            _customersBindingList.Add(newCustomer);
         }
-        else // We are updating an existing customer
+        else 
         {
             _selectedCustomer.FirstName = txtFirstName.Text;
             _selectedCustomer.LastName = txtLastName.Text;
@@ -131,7 +123,7 @@ public partial class CustomerForm : Form
             _selectedCustomer.Email = txtEmail.Text;
             _selectedCustomer.Address = txtAddress.Text;
             _customerRepository.Update(_selectedCustomer);
-            _customersBindingList.ResetItem(_customersBindingList.IndexOf(_selectedCustomer)); // Refresh grid
+            _customersBindingList.ResetItem(_customersBindingList.IndexOf(_selectedCustomer));
         }
 
         await _customerRepository.SaveChangesAsync();
@@ -151,12 +143,8 @@ public partial class CustomerForm : Form
         return true;
     }
 
-    /// <summary>
-    /// Manages the enabled/disabled state of form controls.
-    /// </summary>
     private void SetFormState(FormState state)
     {
-        // Details panel is read-only when just viewing
         panelDetails.Enabled = (state == FormState.Adding || state == FormState.Editing);
 
         btnSave.Enabled = (state == FormState.Adding || state == FormState.Editing);
@@ -170,21 +158,17 @@ public partial class CustomerForm : Form
         }
     }
 
-    // Cancel button to revert changes
     private void btnCancel_Click(object sender, EventArgs e)
     {
-        // If we were editing, restore the original details
         if (_selectedCustomer != null)
         {
             DisplayCustomerDetails();
         }
-        else // If we were adding, just clear the fields
+        else
         {
             ClearInputFields();
         }
         SetFormState(FormState.Viewing);
     }
 }
-
-// Enum to manage form state for clarity
 internal enum FormState { Viewing, Adding, Editing }
