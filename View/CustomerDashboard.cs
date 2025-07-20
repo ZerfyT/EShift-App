@@ -1,22 +1,22 @@
 ﻿using System.ComponentModel;
-using System.Linq;
 using EShift_App.Data.Repositories;
 using EShift_App.Model;
+using EShift_App.Service;
 
 namespace EShift_App.View
 {
     public partial class CustomerDashboard : Form
     {
-        private readonly IRepository<Job> _jobRepository;
-        //private readonly IRepository<Load> _loadRepository;
+        private readonly IJobService _jobService;
+        private readonly IJobRepository _jobRepository;
         private readonly Customer _loggedInCustomer;
         private BindingList<Job> _jobsBindingList;
 
-        public CustomerDashboard(IRepository<Job> jobRepository, IRepository<Load> loadRepository, Customer loggedInCustomer)
+        public CustomerDashboard(IJobService jobService, IJobRepository jobRepository, Customer loggedInCustomer)
         {
             InitializeComponent();
+            _jobService = jobService;
             _jobRepository = jobRepository;
-            //_loadRepository = loadRepository;
             _loggedInCustomer = loggedInCustomer;
             _jobsBindingList = new BindingList<Job>();
         }
@@ -24,7 +24,6 @@ namespace EShift_App.View
         private async void CustomerDashboard_Load(object sender, EventArgs e)
         {
             lblWelcome.Text = $"Welcome, {_loggedInCustomer.FullName}!";
-
             SetupJobsDataGridView();
             await LoadCustomerJobsAsync();
         }
@@ -43,9 +42,7 @@ namespace EShift_App.View
 
         private async Task LoadCustomerJobsAsync()
         {
-            var allJobs = await _jobRepository.GetAllAsync();
-            var myJobs = allJobs.Where(j => j.CustomerID == _loggedInCustomer.CustomerID)
-                                .OrderByDescending(j => j.JobDate);
+            var myJobs = await _jobRepository.GetJobsByCustomerIdAsync(_loggedInCustomer.CustomerID);
 
             _jobsBindingList.Clear();
             foreach (var job in myJobs)
@@ -62,30 +59,38 @@ namespace EShift_App.View
                 return;
             }
 
-            var newJob = new Job
+            try
             {
-                CustomerID = _loggedInCustomer.CustomerID,
-                StartLocation = txtStartLocation.Text,
-                Destination = txtDestination.Text,
-                JobDate = dtpJobDate.Value,
-                Status = "Pending",
-                JobNumber = $"ESH-J{DateTime.Now:yyyyMMddHHmmss}",
-                EstimatedWeight = numWeight.Value,
-                GoodsDescription = txtGoodsDescription.Text
-            };
-            await _jobRepository.AddAsync(newJob);
-            await _jobRepository.SaveChangesAsync();
+                await _jobService.PlaceNewJobAsync(
+                    _loggedInCustomer.CustomerID,
+                    txtStartLocation.Text,
+                    txtDestination.Text,
+                    dtpJobDate.Value,
+                    txtGoodsDescription.Text,
+                    numWeight.Value,
+                    numVolume.Value
+                );
 
-            MessageBox.Show("Your job request has been placed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Your job request has been placed successfully! We will contact you shortly.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                ClearJobCreationForm();
+                tabControlMain.SelectedTab = tabPageMyJobs;
+                await LoadCustomerJobsAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while placing your job: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ClearJobCreationForm()
+        {
             txtStartLocation.Clear();
             txtDestination.Clear();
-            dtpJobDate.Value = DateTime.Now;
             txtGoodsDescription.Clear();
             numWeight.Value = 0;
-
-            tabControlMain.SelectedTab = tabPageMyJobs;
-            await LoadCustomerJobsAsync();
+            numVolume.Value = 0;
+            dtpJobDate.Value = DateTime.Now;
         }
 
         private async void btnRefresh_Click(object sender, EventArgs e)

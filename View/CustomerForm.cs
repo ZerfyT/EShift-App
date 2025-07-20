@@ -110,7 +110,9 @@ public partial class CustomerForm : Form
                 PhoneNumber = txtPhoneNumber.Text,
                 Email = txtEmail.Text,
                 Address = txtAddress.Text,
-                RegistrationDate = DateTime.Now
+                RegistrationDate = DateTime.Now,
+                PasswordHash = "1234",
+                Role = "Customer"
             };
             await _customerRepository.AddAsync(newCustomer);
             _customersBindingList.Add(newCustomer);

@@ -64,7 +64,6 @@ namespace EShift_App.View
             assistantForm.Show();
         }
 
-        // You can add similar methods for other menu items
         private void jobsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // Example for opening Jobs form
@@ -87,7 +86,6 @@ namespace EShift_App.View
             customerForm.Show();
         }
 
-        // Default event handlers from the template
         private void ExitToolsStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();

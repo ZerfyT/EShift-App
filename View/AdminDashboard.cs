@@ -1,16 +1,14 @@
-using System;
 using System.ComponentModel;
-using System.Data;
-using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 using EShift_App.Data.Repositories;
 using EShift_App.Model;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EShift_App.View
 {
     public partial class AdminDashboard : Form
     {
+        private readonly IServiceProvider _serviceProvider;
         private readonly IJobRepository _jobRepository;
         private readonly ILoadRepository _loadRepository;
         private readonly ILorryRepository _lorryRepository;
@@ -25,11 +23,17 @@ namespace EShift_App.View
         private Job? _selectedJob;
         private Load? _selectedLoad;
 
-        public AdminDashboard(IJobRepository jobRepository, ILoadRepository loadRepository, ILorryRepository lorryRepository, IDriverRepository driverRepository, IAssistantRepository assistantRepository, ITransportUnitRepository transportUnitRepository)
+        public AdminDashboard(
+            IServiceProvider serviceProvider, 
+            IJobRepository jobRepository, 
+            ILoadRepository loadRepository, 
+            ILorryRepository lorryRepository, 
+            IDriverRepository driverRepository, 
+            IAssistantRepository assistantRepository, 
+            ITransportUnitRepository transportUnitRepository)
         {
             InitializeComponent();
-
-            // Assign injected repositories
+            _serviceProvider = serviceProvider;
             _jobRepository = jobRepository;
             _loadRepository = loadRepository;
             _lorryRepository = lorryRepository;
@@ -37,7 +41,6 @@ namespace EShift_App.View
             _assistantRepository = assistantRepository;
             _transportUnitRepository = transportUnitRepository;
 
-            // Initialize data binding lists
             _pendingJobsBindingList = new BindingList<Job>();
             _loadsBindingList = new BindingList<Load>();
             _allJobsBindingList = new BindingList<Job>();
@@ -78,11 +81,11 @@ namespace EShift_App.View
             _pendingJobsBindingList.Clear();
             foreach (var job in pendingJobs) _pendingJobsBindingList.Add(job);
 
-            //var allJobs = await _jobRepository.SearchJobsAsync("");
-            //_allJobsBindingList.Clear();
-            //foreach (var job in allJobs) _allJobsBindingList.Add(job);
+            var allJobs = await _jobRepository.SearchJobsAsync("");
+            _allJobsBindingList.Clear();
+            foreach (var job in allJobs) _allJobsBindingList.Add(job);
 
-            //await LoadComboBoxes();
+            await LoadComboBoxes();
         }
 
         private async Task LoadComboBoxes()
@@ -202,37 +205,74 @@ namespace EShift_App.View
             MessageBox.Show("Excel export functionality requires a third-party library and is not yet implemented.", "Info");
         }
 
-        private void btnAddLoad_Click(object sender, EventArgs e)
+        private async void btnAddLoad_Click(object sender, EventArgs e)
         {
             if (_selectedJob == null)
             {
                 MessageBox.Show("Please select a job before adding a load.", "No Job Selected");
                 return;
             }
-            // TODO: Open a new dialog form to add a load for _selectedJob.JobID
-            MessageBox.Show("Functionality to add a new load is not yet implemented.", "Info");
+
+            using var editorForm = _serviceProvider.GetRequiredService<LoadEditorForm>();
+
+            if (editorForm.ShowDialog() == DialogResult.OK)
+            {
+                var newLoad = editorForm.EditedLoad;
+                newLoad.JobID = _selectedJob.JobID;
+
+                // Generate a new load number
+                int nextLoadIndex = _loadsBindingList.Count + 1;
+                newLoad.LoadNumber = $"{_selectedJob.JobNumber}-L{nextLoadIndex}";
+
+                await _loadRepository.AddAsync(newLoad);
+                await _loadRepository.SaveChangesAsync();
+                await LoadLoadsForJob(); // Refresh grid
+            }
         }
 
-        private void btnEditLoad_Click(object sender, EventArgs e)
+        private async void btnEditLoad_Click(object sender, EventArgs e)
         {
             if (_selectedLoad == null)
             {
                 MessageBox.Show("Please select a load to edit.", "No Load Selected");
                 return;
             }
-            // TODO: Open a new dialog form to edit _selectedLoad
-            MessageBox.Show("Functionality to edit a load is not yet implemented.", "Info");
+
+            // Pass the selected load to the editor's constructor
+            using var editorForm = new LoadEditorForm(_selectedLoad);
+
+            if (editorForm.ShowDialog() == DialogResult.OK)
+            {
+                var editedData = editorForm.EditedLoad;
+
+                // Update the selected load with the new data
+                _selectedLoad.GoodsDescription = editedData.GoodsDescription;
+                _selectedLoad.Weight = editedData.Weight;
+                _selectedLoad.Volume = editedData.Volume;
+
+                _loadRepository.Update(_selectedLoad);
+                await _loadRepository.SaveChangesAsync();
+                await LoadLoadsForJob();
+            }
         }
 
-        private void btnDeleteLoad_Click(object sender, EventArgs e)
+        private async void btnDeleteLoad_Click(object sender, EventArgs e)
         {
             if (_selectedLoad == null)
             {
                 MessageBox.Show("Please select a load to delete.", "No Load Selected");
                 return;
             }
-            // TODO: Add confirmation and delete logic
-            MessageBox.Show("Functionality to delete a load is not yet implemented.", "Info");
+
+            var confirmResult = MessageBox.Show($"Are you sure you want to delete Load #{_selectedLoad.LoadNumber}?",
+                                             "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (confirmResult == DialogResult.Yes)
+            {
+                _loadRepository.Delete(_selectedLoad);
+                await _loadRepository.SaveChangesAsync();
+                await LoadLoadsForJob(); // Refresh grid
+            }
         }
     }
 }

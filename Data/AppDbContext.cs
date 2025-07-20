@@ -66,26 +66,26 @@ namespace EShift_App.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
             // Load -> TransportUnit (One-to-One, optional)
-            modelBuilder.Entity<Load>()
-                .HasOne(l => l.TransportUnit)
-                .WithMany()
+            modelBuilder.Entity<TransportUnit>()
+                .HasMany(tu => tu.Loads)
+                .WithOne(l => l.TransportUnit)
                 .HasForeignKey(l => l.TransportUnitID)
                 .OnDelete(DeleteBehavior.SetNull);
 
             // TransportUnit
-            modelBuilder.Entity<TransportUnit>()
-                .HasOne(tu => tu.Lorry)
-                .WithMany()
+            modelBuilder.Entity<Lorry>()
+                .HasMany(l => l.TransportUnits)
+                .WithOne(tu => tu.Lorry)
                 .HasForeignKey(tu => tu.LorryID);
 
-            modelBuilder.Entity<TransportUnit>()
-                .HasOne(tu => tu.Driver)
-                .WithMany()
+            modelBuilder.Entity<Driver>()
+                .HasMany(d => d.TransportUnits)
+                .WithOne(tu => tu.Driver)
                 .HasForeignKey(tu => tu.DriverID);
 
-            modelBuilder.Entity<TransportUnit>()
-                .HasOne(tu => tu.Assistant)
-                .WithMany()
+            modelBuilder.Entity<Assistant>()
+                .HasMany(a => a.TransportUnits)
+                .WithOne(tu => tu.Assistant)
                 .HasForeignKey(tu => tu.AssistantID);
         }
     }

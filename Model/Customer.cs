@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EShift_App.Model
@@ -31,7 +32,9 @@ namespace EShift_App.Model
         public DateTime RegistrationDate { get; set; }
 
         public string PasswordHash { get; set; }
-        public string Role { get; set; }
+
+        [DefaultValue("Customer")]
+        public string? Role { get; set; }
 
         [NotMapped]
         public string FullName => $"{FirstName} {LastName}";

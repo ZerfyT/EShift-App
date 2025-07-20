@@ -1,6 +1,7 @@
 using EShift_App.Data;
 using EShift_App.Data.Repositories;
 using EShift_App.Model;
+using EShift_App.Service;
 using EShift_App.View;
 using EShift_App.View.Auth;
 using Microsoft.EntityFrameworkCore;
@@ -48,8 +49,8 @@ namespace EShift_App
                 else
                 {
                     var customerDashboard = new CustomerDashboard(
-                        services.GetRequiredService<IRepository<Job>>(),
-                        services.GetRequiredService<IRepository<Load>>(),
+                        services.GetRequiredService<IJobService>(),
+                        services.GetRequiredService<IJobRepository>(),
                         loggedInUser
                     );
                     Application.Run(customerDashboard);
@@ -78,6 +79,8 @@ namespace EShift_App
                     services.AddScoped<IJobRepository, JobRepository>();
                     services.AddScoped<ITransportUnitRepository, TransportUnitRepository>();
 
+                    services.AddScoped<IJobService, JobService>();
+
                     services.AddSingleton<Layout>();
                     services.AddTransient<CustomerForm>();
                     services.AddTransient<DriverForm>();
@@ -88,6 +91,7 @@ namespace EShift_App
                     services.AddTransient<AdminDashboard>();
                     services.AddTransient<LoginForm>();
                     services.AddTransient<RegisterForm>();
+                    services.AddTransient<LoadEditorForm>();
                 });
 
             //var mdiForm = host.Services.GetRequiredService<Layout>();

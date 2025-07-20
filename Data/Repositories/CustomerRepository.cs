@@ -1,5 +1,6 @@
 ﻿using EShift_App.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace EShift_App.Data.Repositories
 {
@@ -23,14 +24,12 @@ namespace EShift_App.Data.Repositories
 
         public async Task<IEnumerable<Customer>> SearchAsync(string searchText)
         {
-            var trimmedSearchText = searchText?.Trim();
-
-            if (string.IsNullOrWhiteSpace(trimmedSearchText))
+            if (string.IsNullOrWhiteSpace(searchText))
             {
                 return await GetAllAsync();
             }
 
-            var searchTextLower = trimmedSearchText.ToLower();
+            var searchTextLower = searchText.Trim().ToLower();
 
             return await _context.Customers
                 .Where(c => c.FirstName.ToLower().Contains(searchTextLower) ||
